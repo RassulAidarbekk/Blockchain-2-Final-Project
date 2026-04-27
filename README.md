@@ -11,13 +11,13 @@ Chainlink VRF for loot drops, DAO-governed game parameters (drop rates,
 crafting costs), L2 deployment.
 
 Work division:
-Aidarbek Rassul - Frontend,
-Zarkesh Damir - Game logic,
+Aidarbek Rassul - Frontend;
+Zarkesh Damir - Game logic;
 Kenesbay Alizhan - Backend
 
 Documents work division:
-Aidarbek Rassul - Security audit,
-Zarkesh Damir - README, gas report,
+Aidarbek Rassul - Security audit;
+Zarkesh Damir - README, gas report;
 Kenesbay Alizhan - Project architecture
 
 Project Plan
