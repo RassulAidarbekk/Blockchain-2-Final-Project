@@ -49,6 +49,6 @@ crafting
 voting
 
 9. Deployment and DevOps
-Zadeploit v L2 testnet
+Deploy to L2 testnet
 Configuring CI/CD
 for contract verification
