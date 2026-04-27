@@ -21,34 +21,34 @@ Zarkesh Damir - README, gas report;
 Kenesbay Alizhan - Project architecture
 
 Project Plan
-1. Smart Contract Development
-Creating ERC-1155 for in-game items
-Implementing an AMM marketplace
-Adding a crafting system
-Connecting Chainlink for random rewards
-Implementing a storage (ERC-4626)
+1. Smart Contract Development:
+Creating ERC-1155 for in-game items,
+Implementing an AMM marketplace,
+Adding a crafting system,
+Connecting Chainlink for random rewards,
+Implementing a storage (ERC-4626),
 Adding a DAO (voting and governance)
 
-3. Testing
-Writing unit tests
-Adding fuzz tests and invariant tests
+2. Testing:
+Writing unit tests,
+Adding fuzz tests and invariant tests,
 Security testing (Slither)
 
-5. Frontend Development
-Connecting a wallet (MetaMask)
-Interface for:
-exchange
-crafting
+3. Frontend Development:
+Connecting a wallet (MetaMask),
+Interface for,
+exchange,
+crafting,
 voting
 
-7. Data Indexing
-Subgraph Creation
-Tracking:
-transactions
-crafting
+4. Data Indexing:
+Subgraph Creation,
+Tracking,
+transactions,
+crafting,
 voting
 
-9. Deployment and DevOps
-Deploy to L2 testnet
-Configuring CI/CD
+5. Deployment and DevOps:
+Deploy to L2 testnet,
+Configuring CI/CD,
 for contract verification
