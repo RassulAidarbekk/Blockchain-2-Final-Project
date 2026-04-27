@@ -36,7 +36,7 @@ Security testing (Slither)
 
 3. Frontend Development:
 Connecting a wallet (MetaMask),
-Interface for,
+Interface for:
 exchange,
 crafting,
 voting
