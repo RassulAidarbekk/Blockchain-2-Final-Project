@@ -1,6 +1,6 @@
 # GameFi Economy Capstone
 
-A full-stack decentralized **GameFi Economy Protocol** built for **Option B – GameFi Economy**.
+A full-stack decentralized **GameFi Economy Protocol**.
 
 This project combines ERC-1155 game assets, crafting mechanics, a custom AMM, NFT rentals, VRF-powered loot drops, Chainlink oracle validation, an ERC-4626 treasury vault, DAO governance, subgraph indexing, and a React frontend dApp.
 
@@ -23,7 +23,6 @@ This project combines ERC-1155 game assets, crafting mechanics, a custom AMM, NF
 - [Deployment](#deployment)
 - [Frontend](#frontend)
 - [Subgraph](#subgraph)
-- [Technical Q&A Preparation](#technical-qa-preparation)
 
 ---
 
@@ -85,8 +84,6 @@ The system is designed to demonstrate advanced smart contract engineering, DeFi 
 | ERC-1155 items, crafting, loot drops, rentals | Person 1 |
 | AMM, governance token, vault, oracle, DAO | Person 2 |
 | Frontend, subgraph, CI, deployment, docs, demo | Person 3 |
-
-> Every team member should understand the complete architecture and be prepared for technical Q&A.
 
 ---
 
@@ -329,9 +326,6 @@ forge script script/Deploy.s.sol \
   --verify \
   --etherscan-api-key $BASESCAN_API_KEY
 ```
-
-> Update the script name if your deployment entrypoint uses a different filename.
-
 ---
 
 ## Frontend
@@ -377,37 +371,4 @@ npm run build
 ```
 
 Deploy using your configured Graph deployment target.
-
----
-
-## Technical Q&A Preparation
-
-Every team member should be ready to explain:
-
-- How ERC-1155 items represent resources, crafted assets, and loot boxes
-- How crafting burns input resources and mints output items
-- How the custom AMM maintains the `x * y = k` invariant
-- Why `AMMMath.quoteOutYul()` was optimized with inline Yul
-- How CREATE and CREATE2 are used in `AMMPoolFactory`
-- How ERC20Votes and ERC20Permit support governance
-- How Governor and Timelock protect DAO-controlled changes
-- How UUPS upgradeability is implemented for gameplay parameters
-- How Chainlink price feed stale checks work
-- How VRF-compatible randomness powers loot drops
-- How the ERC-4626 vault accounts for deposits and shares
-- How rental payouts use the pull-payment pattern
-- How the subgraph indexes protocol events
-- How the frontend connects wallets and reads/writes contract state
-- What tests validate security, accounting, and protocol invariants
-
----
-
-## License
-
-Add your project license here.
-
-Example:
-
-```text
-MIT
 ```
