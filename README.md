@@ -1,331 +1,413 @@
-🎮 GameFi Economy Capstone
+# GameFi Economy Capstone
 
-A full-stack decentralized GameFi Economy Protocol built for Option B – GameFi Economy.
+A full-stack decentralized **GameFi Economy Protocol** built for **Option B – GameFi Economy**.
 
-This project combines:
+This project combines ERC-1155 game assets, crafting mechanics, a custom AMM, NFT rentals, VRF-powered loot drops, Chainlink oracle validation, an ERC-4626 treasury vault, DAO governance, subgraph indexing, and a React frontend dApp.
 
-⚔️ ERC-1155 game items
-🛠️ Crafting mechanics
-💱 Custom AMM (x*y=k)
-🧰 NFT rental vaults
-🎲 VRF-powered loot drops
-📈 Chainlink oracle validation
-🏦 ERC-4626 treasury vault
-🗳️ DAO governance with Governor + Timelock
-📊 The Graph subgraph indexing
-🌐 React frontend dApp
-✅ Extensive Foundry testing
-🚀 CI/CD and deployment tooling
-👥 Ownership Split
-Area	Owner
-ERC-1155 items, crafting, loot drops, rentals	Person 1
-AMM, governance token, vault, oracle, DAO	Person 2
-Frontend, subgraph, CI, deployment, docs, demo	Person 3
+---
 
-Every team member should still understand the complete architecture and be prepared for technical Q&A.
+## Table of Contents
 
-📁 Repository Layout
+- [Overview](#overview)
+- [Core Features](#core-features)
+- [Team Ownership](#team-ownership)
+- [Repository Layout](#repository-layout)
+- [Core Contracts](#core-contracts)
+- [Mandatory Criteria Coverage](#mandatory-criteria-coverage)
+- [Architecture Summary](#architecture-summary)
+- [Setup](#setup)
+- [Environment Configuration](#environment-configuration)
+- [Local Development](#local-development)
+- [Testing](#testing)
+- [Security](#security)
+- [Deployment](#deployment)
+- [Frontend](#frontend)
+- [Subgraph](#subgraph)
+- [Technical Q&A Preparation](#technical-qa-preparation)
+
+---
+
+## Overview
+
+The **GameFi Economy Capstone** is a decentralized game economy protocol where players can mint and manage in-game ERC-1155 items, craft new assets, trade through a custom AMM, rent NFTs, open loot boxes using VRF randomness, and participate in DAO governance.
+
+The system is designed to demonstrate advanced smart contract engineering, DeFi mechanics, oracle integration, upgradeability, indexing, frontend integration, and production-style testing and deployment workflows.
+
+---
+
+## Core Features
+
+- **ERC-1155 Game Items**  
+  In-game resources, crafted items, and loot boxes are represented as ERC-1155 tokens.
+
+- **Crafting Mechanics**  
+  Players burn resource items to mint crafted game assets.
+
+- **Custom AMM**  
+  A constant-product `x * y = k` AMM supports token swaps and LP shares.
+
+- **NFT Rental Vaults**  
+  ERC-1155 game assets can be rented through a pull-payment rental vault design.
+
+- **VRF-Powered Loot Drops**  
+  Loot boxes use Chainlink VRF-compatible randomness for fair item distribution.
+
+- **Chainlink Oracle Validation**  
+  Price feeds are validated through an adapter with stale-check protection.
+
+- **ERC-4626 Treasury Vault**  
+  Treasury assets are managed through a tokenized vault standard.
+
+- **DAO Governance**  
+  Governance uses `ERC20Votes`, `ERC20Permit`, OpenZeppelin Governor, and Timelock.
+
+- **Upgradeable Parameters**  
+  Gameplay parameters are upgradeable through UUPS from `GameParametersV1` to `GameParametersV2`.
+
+- **The Graph Subgraph**  
+  Protocol events are indexed for frontend and analytics use.
+
+- **React Frontend dApp**  
+  The frontend uses React, Wagmi, and Viem for wallet and contract interactions.
+
+- **Advanced Testing**  
+  Includes unit tests, fuzz tests, invariant tests, fork tests, and security-focused case studies.
+
+- **CI/CD and Deployment Tooling**  
+  GitHub Actions and deployment scripts support automated testing and Base Sepolia deployment.
+
+---
+
+## Team Ownership
+
+| Area | Owner |
+|---|---|
+| ERC-1155 items, crafting, loot drops, rentals | Person 1 |
+| AMM, governance token, vault, oracle, DAO | Person 2 |
+| Frontend, subgraph, CI, deployment, docs, demo | Person 3 |
+
+> Every team member should understand the complete architecture and be prepared for technical Q&A.
+
+---
+
+## Repository Layout
+
+```text
 contracts/              Solidity production contracts
 contracts/mocks/        Chainlink mocks and testing utilities
-contracts/math/         AMM math + Yul benchmark harness
-
-script/                 Foundry deployment & verification scripts
+contracts/math/         AMM math and Yul benchmark harness
+script/                 Foundry deployment and verification scripts
 scripts/                Local setup and helper scripts
-
 test/                   Unit, fuzz, invariant, fork, and security tests
-
 frontend/               React + Wagmi + Viem frontend dApp
-subgraph/               The Graph schema, mappings, queries
-
-docs/                   Architecture, audit, gas, coverage, slides
+subgraph/               The Graph schema, mappings, and queries
+docs/                   Architecture, audit, gas, coverage, and slides
 .github/workflows/      CI pipeline
-🧱 Core Contracts
-Contract	Purpose
-GameToken.sol	ERC20Votes + ERC20Permit governance token
-GameItems1155.sol	ERC-1155 in-game items and loot boxes
-GameParametersV1.sol	Upgradeable gameplay parameters
-GameParametersV2.sol	DAO-governed upgraded parameter logic
-CraftingManager.sol	Burns resources and mints crafted items
-LootDrop.sol	VRF-compatible loot box distribution
-RentalVault.sol	Pull-payment ERC-1155 rental vault
-AMMPool.sol	Custom x*y=k AMM with LP shares
-AMMPoolFactory.sol	CREATE + CREATE2 pool deployment
-GameVault4626.sol	ERC-4626 treasury vault
-PriceFeedAdapter.sol	Chainlink price feed adapter with stale-check protection
-GameGovernor.sol	OpenZeppelin Governor + Timelock governance
-✅ Mandatory Criteria Coverage
-Requirement	Implementation
-UUPS Upgradeability	GameParametersV1 → GameParametersV2
-CREATE + CREATE2 Factory	AMMPoolFactory
-Inline Yul Optimization	AMMMath.quoteOutYul()
-ERC-20 Votes & Permit	GameToken
-ERC-1155	GameItems1155
-ERC-4626 Vault	GameVault4626
-DeFi Primitive	Custom AMM
-Chainlink Price Feed	PriceFeedAdapter
-Chainlink VRF	LootDrop
-Governor + Timelock	GameGovernor
-Subgraph Integration	subgraph/
-Frontend dApp	frontend/
-Security Practices	CEI, ReentrancyGuard, AccessControl, Pull Payments
-Advanced Testing	Unit, fuzz, invariant, fork, case-study
-CI Pipeline	GitHub Actions
-L2 Deployment	Base Sepolia scripts
-🛠️ Setup
-1. Install Prerequisites
+```
+
+---
+
+## Core Contracts
+
+| Contract | Purpose |
+|---|---|
+| `GameToken.sol` | ERC20Votes + ERC20Permit governance token |
+| `GameItems1155.sol` | ERC-1155 in-game items and loot boxes |
+| `GameParametersV1.sol` | Upgradeable gameplay parameters |
+| `GameParametersV2.sol` | DAO-governed upgraded parameter logic |
+| `CraftingManager.sol` | Burns resources and mints crafted items |
+| `LootDrop.sol` | VRF-compatible loot box distribution |
+| `RentalVault.sol` | Pull-payment ERC-1155 rental vault |
+| `AMMPool.sol` | Custom `x * y = k` AMM with LP shares |
+| `AMMPoolFactory.sol` | CREATE + CREATE2 pool deployment |
+| `GameVault4626.sol` | ERC-4626 treasury vault |
+| `PriceFeedAdapter.sol` | Chainlink price feed adapter with stale-check protection |
+| `GameGovernor.sol` | OpenZeppelin Governor + Timelock governance |
+
+---
+
+## Mandatory Criteria Coverage
+
+| Requirement | Implementation |
+|---|---|
+| UUPS Upgradeability | `GameParametersV1` → `GameParametersV2` |
+| CREATE + CREATE2 Factory | `AMMPoolFactory` |
+| Inline Yul Optimization | `AMMMath.quoteOutYul()` |
+| ERC-20 Votes & Permit | `GameToken` |
+| ERC-1155 | `GameItems1155` |
+| ERC-4626 Vault | `GameVault4626` |
+| DeFi Primitive | Custom AMM |
+| Chainlink Price Feed | `PriceFeedAdapter` |
+| Chainlink VRF | `LootDrop` |
+| Governor + Timelock | `GameGovernor` |
+| Subgraph Integration | `subgraph/` |
+| Frontend dApp | `frontend/` |
+| Security Practices | CEI, `ReentrancyGuard`, `AccessControl`, pull payments |
+| Advanced Testing | Unit, fuzz, invariant, fork, and case-study tests |
+| CI Pipeline | GitHub Actions |
+| L2 Deployment | Base Sepolia scripts |
+
+---
+
+## Architecture Summary
+
+The protocol is composed of several interconnected modules:
+
+1. **Game Assets Layer**  
+   `GameItems1155` manages fungible and semi-fungible game items, resources, crafted assets, and loot boxes.
+
+2. **Gameplay Layer**  
+   `CraftingManager`, `LootDrop`, and `RentalVault` provide player-facing game mechanics.
+
+3. **DeFi Layer**  
+   `AMMPool`, `AMMPoolFactory`, and `GameVault4626` provide trading, liquidity, and treasury functionality.
+
+4. **Oracle Layer**  
+   `PriceFeedAdapter` validates external price data and prevents stale oracle reads.
+
+5. **Governance Layer**  
+   `GameToken`, `GameGovernor`, and Timelock allow token holders to govern protocol parameters and upgrades.
+
+6. **Indexing and Frontend Layer**  
+   The Graph subgraph indexes events, while the React dApp provides user-facing interactions.
+
+---
+
+## Setup
+
+### 1. Install Prerequisites
 
 Required tools:
 
-Git
-Node.js 20+
-Foundry (forge, cast, anvil)
-Python 3 (for Slither)
-2. Clone Repository
+- Git
+- Node.js 20+
+- Foundry: `forge`, `cast`, and `anvil`
+- Python 3, used for Slither
+
+### 2. Clone Repository
+
+```bash
 git clone <your-repo-url>
 cd gamefi-economy-capstone
-3. Install Dependencies
-Automatic Setup
+```
+
+### 3. Install Dependencies
+
+#### Automatic Setup
+
+```bash
 ./scripts/setup.sh
-Manual Setup
+```
+
+#### Manual Setup
+
+```bash
 forge install foundry-rs/forge-std --no-commit
-
 forge install OpenZeppelin/openzeppelin-contracts@v4.9.6 --no-commit
-
 forge install OpenZeppelin/openzeppelin-contracts-upgradeable@v4.9.6 --no-commit
 
 npm install
 
 cd frontend && npm install && cd ..
 cd subgraph && npm install && cd ..
-⚙️ Environment Configuration
+```
+
+---
+
+## Environment Configuration
 
 Create a local environment file:
 
+```bash
 cp .env.example .env
+```
 
 Fill in the following values:
 
+```env
 PRIVATE_KEY=0x...
-
 BASE_SEPOLIA_RPC_URL=...
 BASESCAN_API_KEY=...
-
 MAINNET_RPC_URL=...
-
 CHAINLINK_PRICE_FEED=...
 VRF_COORDINATOR=...
-
 VRF_SUBSCRIPTION_ID=
 VRF_KEY_HASH=
+```
 
 If Chainlink addresses are empty, deployment scripts automatically deploy mocks.
 
-🧪 Local Development
-Format Contracts
+---
+
+## Local Development
+
+### Format Contracts
+
+```bash
 forge fmt --check
-Build Contracts
+```
+
+### Build Contracts
+
+```bash
 forge build
-Run Tests
+```
+
+### Run Tests
+
+```bash
 forge test -vvv
-🔍 Advanced Testing
-Fuzz + Invariant Tests
+```
+
+---
+
+## Testing
+
+### Standard Test Suite
+
+```bash
+forge test -vvv
+```
+
+### Fuzz and Invariant Tests
+
+```bash
 FOUNDRY_PROFILE=ci forge test -vvv
-Coverage Report
+```
+
+### Coverage Report
+
+```bash
 forge coverage --report summary --report lcov
-Slither Analysis
+```
+
+### Slither Analysis
+
+```bash
 python3 -m pip install slither-analyzer
 
 slither . \
   --filter-paths "test|script|lib" \
   --exclude-dependencies \
   --fail-medium
-🚦 One-Command Validation
+```
 
-Run the complete local verification pipeline:
+---
 
-./scripts/run-all.sh
-🚀 Deploy to Base Sepolia
-Deployment
-source .env
+## Security
 
-forge script script/Deploy.s.sol:Deploy \
-  --rpc-url "$BASE_SEPOLIA_RPC_URL" \
+Security patterns used throughout the protocol include:
+
+- Checks-Effects-Interactions pattern
+- `ReentrancyGuard` on sensitive state-changing flows
+- Role-based permissions with `AccessControl`
+- Pull-payment pattern for rental payouts
+- Stale oracle protection in `PriceFeedAdapter`
+- Timelock-protected governance execution
+- Invariant testing for AMM and vault accounting
+- Fuzz testing for edge cases and unexpected input ranges
+
+---
+
+## Deployment
+
+Deployment scripts are located in:
+
+```text
+script/
+```
+
+The project supports deployment to **Base Sepolia**.
+
+Example deployment flow:
+
+```bash
+forge script script/Deploy.s.sol \
+  --rpc-url $BASE_SEPOLIA_RPC_URL \
+  --private-key $PRIVATE_KEY \
   --broadcast \
   --verify \
-  --etherscan-api-key "$BASESCAN_API_KEY" \
-  -vvvv
-Save Deployment Addresses
+  --etherscan-api-key $BASESCAN_API_KEY
+```
 
-Copy deployed addresses into:
+> Update the script name if your deployment entrypoint uses a different filename.
 
-deployments/base-sepolia.json
-frontend/.env.local
-Post-Deployment Verification
-export GOVERNOR=0x...
-export TIMELOCK=0x...
-export VAULT=0x...
-export DEPLOYER=0x...
+---
 
-forge script script/VerifyPostDeploy.s.sol:VerifyPostDeploy \
-  --rpc-url "$BASE_SEPOLIA_RPC_URL" \
-  -vvvv
-🌐 Frontend Setup
+## Frontend
 
-Create frontend environment file:
+The frontend is located in:
 
-cp frontend/.env.example frontend/.env.local
+```text
+frontend/
+```
 
-Replace placeholder addresses with deployed contract addresses.
+Run the frontend locally:
 
-Run Frontend
+```bash
 cd frontend
+npm install
 npm run dev
-Build Frontend
-cd frontend
-npm run build
-📊 Subgraph Setup
-Configure Addresses
+```
 
-Replace zero addresses inside:
+The dApp integrates with deployed contracts through Wagmi and Viem.
 
-subgraph/subgraph.yaml
-Generate Types + Build
+---
+
+## Subgraph
+
+The subgraph is located in:
+
+```text
+subgraph/
+```
+
+Install dependencies:
+
+```bash
 cd subgraph
+npm install
+```
 
+Typical subgraph workflow:
+
+```bash
 npm run codegen
 npm run build
-Deploy to The Graph Studio
-graph auth --studio <deploy-key>
+```
 
-npm run deploy:studio
+Deploy using your configured Graph deployment target.
 
-Documented GraphQL queries:
+---
 
-subgraph/queries.md
-⛽ L1 vs L2 Gas Benchmarking
+## Technical Q&A Preparation
 
-Generate gas comparison reports:
+Every team member should be ready to explain:
 
-./scripts/l2-gas-report.sh
+- How ERC-1155 items represent resources, crafted assets, and loot boxes
+- How crafting burns input resources and mints output items
+- How the custom AMM maintains the `x * y = k` invariant
+- Why `AMMMath.quoteOutYul()` was optimized with inline Yul
+- How CREATE and CREATE2 are used in `AMMPoolFactory`
+- How ERC20Votes and ERC20Permit support governance
+- How Governor and Timelock protect DAO-controlled changes
+- How UUPS upgradeability is implemented for gameplay parameters
+- How Chainlink price feed stale checks work
+- How VRF-compatible randomness powers loot drops
+- How the ERC-4626 vault accounts for deposits and shares
+- How rental payouts use the pull-payment pattern
+- How the subgraph indexes protocol events
+- How the frontend connects wallets and reads/writes contract state
+- What tests validate security, accounting, and protocol invariants
 
-Then update:
+---
 
-docs/L1_L2_GAS_COMPARISON.md
+## License
 
-with real transaction measurements from:
+Add your project license here.
 
-Ethereum Sepolia
-Base Sepolia (or chosen L2)
-🔐 Security Features
+Example:
 
-Implemented protections include:
-
-ReentrancyGuard
-Checks-Effects-Interactions pattern
-SafeERC20
-AccessControl
-Pull-payment architecture
-Oracle staleness protection
-Timelock-governed upgrades
-Governance-controlled treasury
-Vulnerability case-study testing
-🧪 Testing Overview
-Included Test Types
-Unit Tests
-Fuzz Tests
-Invariant Tests
-Fork Tests
-Governance Lifecycle Tests
-Security Regression Tests
-Statistics
-Metric	Count
-Test Functions	88
-Invariant Functions	6
-Coverage Goal	90%+
-📦 CI Pipeline
-
-GitHub Actions pipeline runs:
-
-Formatting
-Build checks
-Unit tests
-Coverage
-Slither
-Frontend build
-Subgraph build
-Linting
-
-Location:
-
-.github/workflows/ci.yml
-📋 Final Submission Checklist
- Contracts compile successfully
- forge test -vvv passes
- Coverage ≥ 90%
- Slither has zero High/Medium findings
- Contracts deployed + verified on L2
- Deployment JSON committed
- Frontend connected to live contracts
- Subgraph deployed and queried
- Documentation finalized
- All team members ready for architecture Q&A
-🏁 Tech Stack
-Smart Contracts
-Solidity
-Foundry
-OpenZeppelin
-Chainlink
-Frontend
-React
-TypeScript
-Wagmi
-Viem
-Indexing
-The Graph
-Security & Tooling
-Slither
-GitHub Actions
-Forge Coverage
-Base Sepolia
-📜 License
-
-MIT License🧱 Core Contracts
-ContractPurposeGameToken.solERC20Votes + ERC20Permit governance tokenGameItems1155.solERC-1155 in-game items and loot boxesGameParametersV1.solUpgradeable gameplay parametersGameParametersV2.solDAO-governed upgraded parameter logicCraftingManager.solBurns resources and mints crafted itemsLootDrop.solVRF-compatible loot box distributionRentalVault.solPull-payment ERC-1155 rental vaultAMMPool.solCustom x*y=k AMM with LP sharesAMMPoolFactory.solCREATE + CREATE2 pool deploymentGameVault4626.solERC-4626 treasury vaultPriceFeedAdapter.solChainlink price feed adapter with stale-check protectionGameGovernor.solOpenZeppelin Governor + Timelock governance
-✅ Mandatory Criteria Coverage
-RequirementImplementationUUPS UpgradeabilityGameParametersV1 → GameParametersV2CREATE + CREATE2 FactoryAMMPoolFactoryInline Yul OptimizationAMMMath.quoteOutYul()ERC-20 Votes & PermitGameTokenERC-1155GameItems1155ERC-4626 VaultGameVault4626DeFi PrimitiveCustom AMMChainlink Price FeedPriceFeedAdapterChainlink VRFLootDropGovernor + TimelockGameGovernorSubgraph Integrationsubgraph/Frontend dAppfrontend/Security PracticesCEI, ReentrancyGuard, AccessControl, Pull PaymentsAdvanced TestingUnit, fuzz, invariant, fork, case-studyCI PipelineGitHub ActionsL2 DeploymentBase Sepolia scripts
-🛠️ Setup
-1. Install Prerequisites
-Required tools:
-Git
-Node.js 20+
-Foundry (forge, cast, anvil)
-Python 3 (for Slither)
-2. Clone Repository
-git clone <your-repo-url> cd gamefi-economy-capstone 
-3. Install Dependencies
-Automatic Setup
-./scripts/setup.sh 
-Manual Setup
-forge install foundry-rs/forge-std --no-commit forge install OpenZeppelin/openzeppelin-contracts@v4.9.6 --no-commit forge install OpenZeppelin/openzeppelin-contracts-upgradeable@v4.9.6 --no-commit npm install cd frontend && npm install && cd .. cd subgraph && npm install && cd .. 
-⚙️ Environment Configuration
-Create a local environment file:
-cp .env.example .env 
-Fill in the following values:
-PRIVATE_KEY=0x... BASE_SEPOLIA_RPC_URL=... BASESCAN_API_KEY=... MAINNET_RPC_URL=... CHAINLINK_PRICE_FEED=... VRF_COORDINATOR=... VRF_SUBSCRIPTION_ID= VRF_KEY_HASH
-= 
-If Chainlink addresses are empty, deployment scripts automatically deploy mocks
-.
-🧪 Local Development
-Format Contracts
-forge fmt --check 
-Build Contracts
-forge build 
-Run Tests
-forge test -vvv 
-🔍 Advanced Testing
-Fuzz + Invariant Tests
-FOUNDRY_PROFILE=ci forge test -vvv 
-Coverage Report
-forge coverage --report summary --report lcov 
-Slither Analysis
-python3 -m pip install slither-analyzer slither . \ --filter-paths "test|script|lib" \ --exclude-dependencies \ --fail-medium
+```text
+MIT
+```
