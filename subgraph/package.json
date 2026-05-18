@@ -1,0 +1,20 @@
+{
+  "name": "gamefi-economy-subgraph",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy:studio": "graph deploy --studio gamefi-economy",
+    "anvil": "anvil",
+    "deploy": "forge script script/Deploy.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --json",
+    "export": "node scripts/export-addresses.js",
+    "frontend": "cd frontend && pnpm dev",
+    "dev": "node scripts/dev.js"
+  },
+
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "latest",
+    "@graphprotocol/graph-ts": "latest"
+  }
+}
